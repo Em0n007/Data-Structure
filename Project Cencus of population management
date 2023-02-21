@@ -1,0 +1,302 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<conio.h>
+struct People
+{
+long int reg;
+char phn[20];
+char name[50];
+char add[80];
+char gen[15];
+int age;
+int date;
+int month;
+int year;
+struct People *next;
+}* head;
+void added(long int reg,char* phn, char* name, char* add, char* gen, int age,int date,int
+month,int year)
+{
+struct People * people = (struct People *) malloc(sizeof(struct People));
+people->reg = reg;
+strcpy(people->phn, phn);
+strcpy(people->name, name);
+strcpy(people->add, add);
+strcpy(people->gen, gen);
+people->age = age;
+people->date = date;
+people->month = month;
+people->year = year;
+people->next = NULL;
+if(head==NULL)
+{
+head = people;
+}
+else
+{
+/*people->next = head;
+head = people;*/
+struct People*temp=head;
+while(temp->next!=NULL)
+
+temp=temp->next;
+temp->next=people;
+}
+printf("\n\n\t\t\tInformation of this Registration No. %ld Added Successfully In The List
+!!!\n",reg);
+}
+int getCount(struct People * temp)
+{
+int count = 0;
+struct People * current = head;
+while (current != NULL)
+{
+count++;
+current = current->next;
+}
+return count;
+}
+void display()
+{
+int count;
+struct People * temp = head;
+if(temp== NULL)
+{
+printf("\n\t\t\t Information Of Registration No. List is Empty!!!\n");
+}
+else
+{
+printf("\n\n\t\t\t************************Peoples Information
+List************************************");
+printf("\n\n\t\t\t************************************************************************************\n");
+while(temp!=NULL)
+{
+printf("\n\t\t\tThe Registration No. :%ld\n",temp->reg);
+printf("\t\t\tThe Phone Number of people :%s\n",temp->phn);
+printf("\t\t\tThe Name of People :%s\n",temp->name);
+printf("\t\t\tThe Address of People:%s\n",temp->add);
+printf("\t\t\tThe Gender of People :%s\n",temp->gen);
+printf("\t\t\tThe Age of People :%d\n",temp->age);
+printf("\t\t\tThe people date of birth: %d/%d/%d\n",temp->date, temp->month,
+temp->year);
+temp = temp->next;
+}
+printf("\n\n\t\t\t************************************************************************************\n");
+printf("\n\t\t\tTotal Registered Information of People in the list is : %d", getCount(head));
+}
+}
+
+void search(long int reg)
+{
+struct People * temp = head;
+if(head==NULL)
+{
+printf("\n\t\t\t Information Of Registration No. List is Empty!!!\n");
+}
+else
+{
+while(temp!=NULL)
+{
+if(temp->reg==reg)
+{
+printf("\n\t\t\tInformation of Registration No. %ld Is Found !!!\n", reg);
+printf("\n\n\t\t\t*************************************************************************************\n")
+;
+printf("\t\t\t Searching People Information List
+");
+printf("\n\t\t\t*************************************************************************************\n");
+printf("\n\t\t\tThe Registration No. :%ld\n",temp->reg);
+printf("\t\t\tThe Phone Number of people :%s\n",temp->phn);
+printf("\t\t\tThe Name of People :%s\n",temp->name);
+printf("\t\t\tThe Address of People:%s\n",temp->add);
+printf("\t\t\tThe Gender of People :%s\n",temp->gen);
+printf("\t\t\tThe Age of People :%d\n",temp->age);
+printf("\t\t\tThe people date of birth: %d/%d/%d\n",temp->date, temp->month,
+temp->year);
+return;
+}
+temp = temp->next;
+}
+}
+printf("\n\n\t\t\tNot Found the People with %ld Reg No. In The Information List !!!!!\n",reg);
+}
+void Delete(long int reg)
+{
+struct People * temp1 = head;
+struct People * temp2 = head;
+while(temp1!=NULL)
+{
+if(temp1->reg==reg)
+{
+printf("\n\t\t\tInformation of Registration No. %ld Is Found !!!\n", reg);
+if(temp1==temp2)
+{
+
+head = head->next;
+free(temp1);
+}
+else
+{
+temp2->next = temp1->next;
+free(temp1);
+}
+printf("\n\t\t\tDeleting of the Registration No. Information Successfully !!!!\n");
+return;
+}
+temp2 = temp1;
+temp1 = temp1->next;
+}
+printf("\n\n\t\t\tNot Found the People with %ld Reg No. In The Information List !!!!!\n",reg);
+}
+void update(long int reg)
+{
+struct People * temp = head;
+while(temp!=NULL)
+{
+if(temp->reg==reg)
+{
+printf("\n\t\t\tInformation of Registration No. %ld Is Found !!!\n\n\n", reg);
+printf("\t\t\t*********************Update People Information*********************");
+printf("\n\n\t\t\t***************************************************************************\n");
+printf("\n\t\t\tUpdate People Registration Number :");
+scanf("%ld",&temp->reg);
+printf("\n\t\t\tUpdate People Phone Number :");
+fflush(stdin);
+gets(temp->phn);
+printf("\n\t\t\tUpdate People Name :");
+fflush(stdin);
+gets(temp->name);
+printf("\n\t\t\tUpdate People Address :");
+fflush(stdin);
+gets(temp->add);
+fflush(stdin);
+printf("\n\t\t\tUpdate People Gender :");
+fflush(stdin);
+gets(temp->gen);
+printf("\n\t\t\tUpdate People age :");
+fflush(stdin);
+scanf("%d",&temp->age);
+printf("\n\t\t\tUpdate People Birth Date : ");
+scanf("%d",&temp->date);
+
+printf("\n\t\t\tUpdate People Birth Month : ");
+scanf("%d",&temp->month);
+printf("\n\t\t\tUpdate people Birth Year : ");
+scanf("%d",&temp->year);
+printf("\n\n\t\t\tInformation of this Registration No. %ld Updated Successfully In The
+List !!!\n",temp->reg);
+return;
+}
+temp = temp->next;
+}
+printf("\n\n\t\t\tNot Found the People with %ld Reg No. In The Information List !!!!!\n",reg);
+}
+int main()
+{
+head = NULL;
+int choice,temp;
+long int reg;
+char phn[20];
+char name[50];
+char add[80];
+char gen[15];
+int age;
+int date;
+int month;
+int year;
+system("cls");
+while(1)
+{
+//mainMenu:
+system("cls");
+printf("\n\t\t\t*************************************************************************************\n");
+printf("\t\t\t Welcome to Census Population Management Method
+");
+printf("\n\t\t\t*************************************************************************************\n");
+printf("\t\t\t National Identity Registration ");
+printf("\n\t\t\t*************************************************************************************\n");
+printf("\n\n\t\t\t1.Add People Information--->");
+printf("\n\n\t\t\t2.Display People In List--->");
+printf("\n\n\t\t\t3.Search A People Information--->");
+printf("\n\n\t\t\t4.Delete People Information--->");
+printf("\n\n\t\t\t5.Update A People Information--->");
+printf("\n\n\t\t\t6.Exit from the Application--->");
+printf("\n\n\t\t\t*Select A Option From Here: ");
+
+scanf("%d",&choice);
+switch (choice)
+{
+case 1:
+system("cls");
+printf("\n\n\t\t\t*********************Enter New People
+Information**************************");
+printf("\n\n\t\t\t***************************************************************************\n");
+printf("\n\t\t\tEnter People Registration Number :");
+scanf("%ld",&reg);
+printf("\n\t\t\tEnter People Phone Number :");
+fflush(stdin);
+gets(phn);
+printf("\n\t\t\tEnter People Name :");
+fflush(stdin);
+gets(name);
+printf("\n\t\t\tEnter People Address :");
+fflush(stdin);
+gets(add);
+printf("\n\t\t\tEnter People Gender :");
+fflush(stdin);
+gets(gen);
+printf("\n\t\t\tEnter People age :");
+fflush(stdin);
+scanf("%d",&age);
+printf("\n\t\t\tEnter People Birth Date : ");
+fflush(stdin);
+scanf("%d",&date);
+printf("\n\t\t\tEnter People Birth Month : ");
+fflush(stdin);
+scanf("%d",&month);
+printf("\n\t\t\tEnter people Birth Year : ");
+fflush(stdin);
+scanf("%d",&year);
+added(reg, phn, name, add, gen, age, date, month, year);
+break;
+case 2:
+system("cls");
+display();
+break;
+case 3:
+system("cls");
+display();
+printf("\n\n\t\t\tTo Search Enter The People Registration No. :");
+scanf("%ld",&reg);
+system("cls");
+search(reg);
+break;
+
+case 4:
+system("cls");
+display();
+printf("\n\n\t\t\tTo Delete Enter The People Registration No. :");
+scanf("%ld",&reg);
+system("cls");
+Delete(reg);
+break;
+case 5:
+system("cls");
+display();
+printf("\n\n\t\t\tTo Update Enter The People Registration No. :");
+scanf("%ld",&reg);
+system("cls");
+update(reg);
+break;
+case 6:
+exit(1);
+default :
+system("cls");
+printf("\n\t\t\tInvalid Option!!!Choice Right Option!!");
+//goto mainMenu;
+}
+printf("\n\n\t\t\tContinue to Again!!!");
+getch();
+}
+}
